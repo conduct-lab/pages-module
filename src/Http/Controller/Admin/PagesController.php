@@ -56,7 +56,7 @@ class PagesController extends AdminController
     {
         $preferences->set('anomaly.module.pages::page_view', $view);
 
-        return $this->redirect->back();
+        return back();
     }
 
     /**
@@ -139,7 +139,7 @@ class PagesController extends AdminController
 
             $this->messages->error('streams::message.access_denied');
 
-            return $this->redirect->back();
+            return back();
         }
 
         $pages->delete($page = $pages->find($id));
