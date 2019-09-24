@@ -25,6 +25,5 @@ class RefreshPagesModule
         app(Kernel::class)->call('pages:dump');
 
         $command->info('Pages cache refreshed.');
-
     }
 }

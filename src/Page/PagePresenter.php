@@ -2,7 +2,7 @@
 
 use Anomaly\PagesModule\Page\Contract\PageInterface;
 use Anomaly\Streams\Platform\Entry\EntryPresenter;
-use Anomaly\Streams\Platform\Support\Decorator;
+
 
 /**
  * Class PagePresenter
@@ -35,7 +35,7 @@ class PagePresenter extends EntryPresenter
     /**
      * Return the user's status as a label.
      *
-     * @param  string      $size
+     * @param  string $size
      * @return null|string
      */
     public function statusLabel($size = 'sm')
@@ -96,7 +96,7 @@ class PagePresenter extends EntryPresenter
         $entry = $this->object->getEntry();
 
         if ($entry && $entry->hasField($key)) {
-            return (New Decorator())->decorate($entry)->{$key};
+            return decorate($entry)->{$key};
         }
 
         return parent::__get($key);

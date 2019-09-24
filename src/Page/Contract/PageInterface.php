@@ -274,5 +274,4 @@ interface PageInterface extends EntryInterface
      * @return HasMany
      */
     public function siblings();
-
 }

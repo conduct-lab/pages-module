@@ -31,5 +31,4 @@ class PageTreeBuilder extends TreeBuilder
             'permission' => 'anomaly.module.pages::pages.delete',
         ],
     ];
-
 }

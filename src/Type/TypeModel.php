@@ -67,16 +67,6 @@ class TypeModel extends PagesTypesEntryModel implements TypeInterface
     }
 
     /**
-     * Get the related entry stream.
-     *
-     * @return StreamInterface
-     */
-    public function getEntryStream()
-    {
-        return $this->dispatch(new GetStream($this));
-    }
-
-    /**
      * Get the related entry stream ID.
      *
      * @return int
@@ -88,6 +78,16 @@ class TypeModel extends PagesTypesEntryModel implements TypeInterface
         }
 
         return $stream->getId();
+    }
+
+    /**
+     * Get the related entry stream.
+     *
+     * @return StreamInterface
+     */
+    public function getEntryStream()
+    {
+        return dispatch_now(new GetStream($this));
     }
 
     /**

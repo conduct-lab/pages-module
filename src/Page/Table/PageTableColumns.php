@@ -33,7 +33,6 @@ class PageTableColumns
                         'path'    => 'entry.path',
                         'title'   => 'entry.title',
                         'home'    => function (PageInterface $entry) {
-
                             if (!$entry->isHome()) {
                                 return null;
                             }
@@ -41,7 +40,6 @@ class PageTableColumns
                             return '<i class="fa fa-home text-success"></i>';
                         },
                         'visible' => function (PageInterface $entry) {
-
                             if ($entry->isVisible()) {
                                 return null;
                             }
@@ -49,7 +47,6 @@ class PageTableColumns
                             return '<i class="fa fa-chain-broken text-muted"></i>';
                         },
                         'locked'  => function (PageInterface $entry) {
-
                             $roles = $entry->getAllowedRoles();
 
                             if ($roles->isEmpty()) {
@@ -59,7 +56,6 @@ class PageTableColumns
                             return '<i class="fa fa-lock text-muted"></i>';
                         },
                         'scheduled'  => function (PageInterface $entry) {
-
                             if ($entry->isPublished()) {
                                 return null;
                             }

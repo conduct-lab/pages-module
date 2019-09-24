@@ -39,10 +39,11 @@ class SetPath
         $page = $this->translation->getParent();
 
         if ($parent = $page->getParent()) {
-            $path = ($parent->isHome()
+            $path = (
+                $parent->isHome()
                     ? $parent->translate($this->translation->getLocale())->slug
                     : $parent->translate($this->translation->getLocale())->path
-                ) . '/' . $this->translation->slug;
+            ) . '/' . $this->translation->slug;
         } elseif ($page->isHome()) {
             $path = '/';
         } else {

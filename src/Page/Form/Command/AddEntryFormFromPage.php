@@ -16,7 +16,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 class AddEntryFormFromPage
 {
 
-    use DispatchesJobs;
+
 
     /**
      * The multiple form builder.
@@ -55,7 +55,6 @@ class AddEntryFormFromPage
         $type = $this->page->getType();
 
         if (request()->has('type')) {
-
             $type = $types->find(request('type'));
 
             $this->builder->setOption('redirect', 'admin/pages/edit/' . $this->page->getId());

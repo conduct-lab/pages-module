@@ -14,7 +14,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 class PageFormFields
 {
 
-    use DispatchesJobs;
+
 
     /**
      * Handle the page fields.
@@ -55,7 +55,6 @@ class PageFormFields
                     $builder->getFields(),
                     $translations->map(
                         function ($translation) {
-
                             return [
                                 'field'  => 'slug',
                                 'locale' => $translation->locale,

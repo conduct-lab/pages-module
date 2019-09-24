@@ -60,5 +60,4 @@ class PageTableBuilder extends TableBuilder
             'sort_order' => 'ASC',
         ],
     ];
-
 }

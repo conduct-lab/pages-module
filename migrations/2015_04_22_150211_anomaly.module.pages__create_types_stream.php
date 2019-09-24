@@ -61,5 +61,4 @@ class AnomalyModulePagesCreateTypesStream extends Migration
             'required' => true,
         ],
     ];
-
 }

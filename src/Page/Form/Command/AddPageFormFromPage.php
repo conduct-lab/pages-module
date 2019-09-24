@@ -17,7 +17,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 class AddPageFormFromPage
 {
 
-    use DispatchesJobs;
+
 
     /**
      * The multiple form builder.

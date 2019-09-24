@@ -46,5 +46,4 @@ class AnomalyModulePagesAddPublishAtFieldToPages extends Migration
     protected $assignments = [
         'publish_at',
     ];
-
 }

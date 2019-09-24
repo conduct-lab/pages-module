@@ -34,7 +34,7 @@ class TypesController extends AdminController
      */
     public function choose(TypeRepositoryInterface $types)
     {
-        return $this->view->make(
+        return view(
             'module::admin/pages/choose',
             [
                 'types' => $types->all(),
@@ -50,7 +50,7 @@ class TypesController extends AdminController
      */
     public function change(TypeRepositoryInterface $types, $id)
     {
-        return $this->view->make(
+        return view(
             'module::admin/pages/change',
             [
                 'types' => $types->all(),
@@ -81,5 +81,4 @@ class TypesController extends AdminController
     {
         return $form->render($id);
     }
-
 }

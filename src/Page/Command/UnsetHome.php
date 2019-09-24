@@ -3,7 +3,6 @@
 use Anomaly\PagesModule\Page\Contract\PageInterface;
 use Anomaly\PagesModule\Page\Contract\PageRepositoryInterface;
 
-
 /**
  * Class UnsetHome
  *

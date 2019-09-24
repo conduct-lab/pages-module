@@ -43,5 +43,4 @@ class PagesModuleCriteria extends PluginCriteria
 
         return $this;
     }
-
 }

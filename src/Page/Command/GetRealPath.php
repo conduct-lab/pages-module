@@ -2,7 +2,6 @@
 
 use Anomaly\PagesModule\Page\Contract\PageInterface;
 
-
 /**
  * Class GetRealPath
  *

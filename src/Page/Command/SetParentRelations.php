@@ -4,7 +4,6 @@ use Anomaly\PagesModule\Page\Contract\PageInterface;
 use Anomaly\PagesModule\Page\PageCollection;
 use Anomaly\Streams\Platform\Model\EloquentModel;
 
-
 /**
  * Class SetParentRelations
  *

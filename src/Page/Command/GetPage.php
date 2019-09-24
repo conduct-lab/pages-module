@@ -6,7 +6,6 @@ use Anomaly\PagesModule\Page\PagePresenter;
 use Anomaly\Streams\Platform\Model\EloquentModel;
 use Anomaly\Streams\Platform\View\ViewTemplate;
 
-
 /**
  * Class GetPage
  *

@@ -60,7 +60,6 @@ class PageTreeSegments
                         'title' => 'module::message.restricted',
                     ],
                     'enabled'     => function (PageInterface $entry) {
-
                         $roles = $entry->getAllowedRoles();
 
                         return !$roles->isEmpty();

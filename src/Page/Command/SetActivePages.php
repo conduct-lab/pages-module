@@ -15,7 +15,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 class SetActivePages
 {
 
-    use DispatchesJobs;
+
     
     /**
      * The page collection.
@@ -40,7 +40,6 @@ class SetActivePages
     public function handle(ViewTemplate $template)
     {
         if (!$current = $this->pages->current()) {
-
             return;
         }
 
@@ -63,7 +62,6 @@ class SetActivePages
              * parent of current page.
              */
             if ($page->getId() == $current->getParentId()) {
-
                 $page->setActive(true);
             }
 
@@ -72,10 +70,9 @@ class SetActivePages
              * of this page then mark it active too.
              */
             if (!$this->pages->children($page)->active()->isEmpty()) {
-
                 $page->setActive(true);
 
-                $this->dispatch(new SetActivePages($this->pages));
+                dispatch_now(new SetActivePages($this->pages));
             }
         }
     }

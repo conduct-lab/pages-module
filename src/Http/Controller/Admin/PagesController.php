@@ -67,11 +67,11 @@ class PagesController extends AdminController
      */
     public function create(PageEntryFormBuilder $form, PageRepositoryInterface $pages)
     {
-        $this->dispatch(new AddEntryFormFromRequest($form));
-        $this->dispatch(new AddPageFormFromRequest($form));
+        dispatch_now(new AddEntryFormFromRequest($form));
+        dispatch_now(new AddPageFormFromRequest($form));
 
         /* @var PageInterface $parent */
-        if ($parent = $pages->find($this->request->get('parent'))) {
+        if ($parent = $pages->find(request('parent'))) {
 
             /* @var PageFormBuilder $pageForm */
             $pageForm = $form->getChildForm('page');
@@ -95,8 +95,8 @@ class PagesController extends AdminController
         /* @var PageInterface $page */
         $page = $pages->find($id);
 
-        $this->dispatch(new AddPageFormFromPage($form, $page)); // First
-        $this->dispatch(new AddEntryFormFromPage($form, $page)); // Second
+        dispatch_now(new AddPageFormFromPage($form, $page)); // First
+        dispatch_now(new AddEntryFormFromPage($form, $page)); // Second
 
         return $form->render($page);
     }
@@ -136,7 +136,6 @@ class PagesController extends AdminController
     public function delete(PageRepositoryInterface $pages, Authorizer $authorizer, $id)
     {
         if (!$authorizer->authorize('anomaly.module.pages::pages.delete')) {
-
             $this->messages->error('streams::message.access_denied');
 
             return back();

@@ -5,7 +5,7 @@ return [
         'read',
         'write',
         'delete',
-        'preview'
+        'preview',
     ],
     'types'  => [
         'read',

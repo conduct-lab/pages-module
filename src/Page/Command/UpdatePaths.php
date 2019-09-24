@@ -4,7 +4,6 @@ use Anomaly\PagesModule\Page\Contract\PageInterface;
 use Anomaly\PagesModule\Page\Contract\PageRepositoryInterface;
 use Anomaly\PagesModule\Page\PageTranslationsModel;
 
-
 /**
  * Class UpdatePaths
  *
@@ -47,7 +46,8 @@ class UpdatePaths
                 foreach ($page->getTranslations() as $translation) {
                     $pages->save($translation->setAttribute(
                         'path',
-                        ($parent->isHome()
+                        (
+                            $parent->isHome()
                             ? $parent->translateOrDefault($translation->getLocale())->slug
                             : $parent->translateOrDefault($translation->getLocale())->path
                         ) . '/' . $translation->slug

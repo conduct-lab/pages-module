@@ -18,5 +18,4 @@ class PagesModule extends Module
      * @var string
      */
     protected $icon = 'laptop';
-
 }

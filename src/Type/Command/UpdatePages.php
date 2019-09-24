@@ -16,7 +16,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 class UpdatePages
 {
 
-    use DispatchesJobs;
+
 
     /**
      * The page type instance.

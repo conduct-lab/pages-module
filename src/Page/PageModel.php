@@ -115,6 +115,41 @@ class PageModel extends PagesPagesEntryModel implements PageInterface
     }
 
     /**
+     * Return the page content.
+     *
+     * @return null|string
+     */
+    public function content()
+    {
+        return $this
+            ->make()
+            ->getContent();
+    }
+
+    /**
+     * Get the content.
+     *
+     * @return null|string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set the content.
+     *
+     * @param $content
+     * @return $this
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
      * Make the page.
      *
      * @return $this
@@ -129,15 +164,25 @@ class PageModel extends PagesPagesEntryModel implements PageInterface
     }
 
     /**
-     * Return the page content.
+     * Get the page handler.
      *
-     * @return null|string
+     * @return PageHandlerInterface
      */
-    public function content()
+    public function getHandler()
     {
-        return $this
-            ->make()
-            ->getContent();
+        $type = $this->getType();
+
+        return $type->getHandler();
+    }
+
+    /**
+     * Get the page type.
+     *
+     * @return null|TypeInterface
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
@@ -195,16 +240,6 @@ class PageModel extends PagesPagesEntryModel implements PageInterface
     }
 
     /**
-     * Return if schedule is due.
-     *
-     * @return bool
-     */
-    public function isPublished()
-    {
-        return !($this->getPublishAt()->diff(now(config('app.timezone')))->invert);
-    }
-
-    /**
      * Get the exact flag.
      *
      * @return bool
@@ -232,6 +267,26 @@ class PageModel extends PagesPagesEntryModel implements PageInterface
     public function isEnabled()
     {
         return $this->enabled;
+    }
+
+    /**
+     * Return if schedule is due.
+     *
+     * @return bool
+     */
+    public function isPublished()
+    {
+        return !($this->getPublishAt()->diff(now(config('app.timezone')))->invert);
+    }
+
+    /**
+     * Return the publish at date.
+     *
+     * @return Carbon
+     */
+    public function getPublishAt()
+    {
+        return $this->publish_at ?: now();
     }
 
     /**
@@ -295,16 +350,6 @@ class PageModel extends PagesPagesEntryModel implements PageInterface
     }
 
     /**
-     * Return the publish at date.
-     *
-     * @return Carbon
-     */
-    public function getPublishAt()
-    {
-        return $this->publish_at ?: now();
-    }
-
-    /**
      * Get the related roles allowed.
      *
      * @return EloquentCollection
@@ -326,28 +371,6 @@ class PageModel extends PagesPagesEntryModel implements PageInterface
     }
 
     /**
-     * Get the page type.
-     *
-     * @return null|TypeInterface
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Get the page handler.
-     *
-     * @return PageHandlerInterface
-     */
-    public function getHandler()
-    {
-        $type = $this->getType();
-
-        return $type->getHandler();
-    }
-
-    /**
      * Get the theme layout.
      *
      * @return string
@@ -358,16 +381,6 @@ class PageModel extends PagesPagesEntryModel implements PageInterface
     }
 
     /**
-     * Get the related entry.
-     *
-     * @return null|EntryInterface
-     */
-    public function getEntry()
-    {
-        return $this->entry;
-    }
-
-    /**
      * Get the related entry ID.
      *
      * @return null|int
@@ -375,29 +388,6 @@ class PageModel extends PagesPagesEntryModel implements PageInterface
     public function getEntryId()
     {
         return $this->entry_id;
-    }
-
-    /**
-     * Get the content.
-     *
-     * @return null|string
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * Set the content.
-     *
-     * @param $content
-     * @return $this
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
-
-        return $this;
     }
 
     /**
@@ -517,4 +507,13 @@ class PageModel extends PagesPagesEntryModel implements PageInterface
         return $array;
     }
 
+    /**
+     * Get the related entry.
+     *
+     * @return null|EntryInterface
+     */
+    public function getEntry()
+    {
+        return $this->entry;
+    }
 }

@@ -104,5 +104,4 @@ class AnomalyModulePagesCreatePagesFields extends Migration
         'name'             => 'anomaly.field_type.text',
         'description'      => 'anomaly.field_type.textarea',
     ];
-
 }

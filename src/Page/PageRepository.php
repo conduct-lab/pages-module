@@ -5,7 +5,6 @@ use Anomaly\PagesModule\Page\Contract\PageInterface;
 use Anomaly\PagesModule\Page\Contract\PageRepositoryInterface;
 use Anomaly\Streams\Platform\Entry\EntryRepository;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 
 /**
  * Class PageRepository
@@ -17,7 +16,6 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 class PageRepository extends EntryRepository implements PageRepositoryInterface
 {
 
-    use DispatchesJobs;
 
     /**
      * The page model.
@@ -55,7 +53,7 @@ class PageRepository extends EntryRepository implements PageRepositoryInterface
      */
     public function accessible()
     {
-        return $this->dispatch(new RemoveRestrictedPages($this->all()));
+        return dispatch_now(new RemoveRestrictedPages($this->all()));
     }
 
     /**

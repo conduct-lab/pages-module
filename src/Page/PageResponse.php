@@ -25,7 +25,7 @@ class PageResponse
      *
      * @param ResponseFactory $response
      */
-    function __construct(ResponseFactory $response)
+    public function __construct(ResponseFactory $response)
     {
         $this->response = $response;
     }
@@ -38,7 +38,6 @@ class PageResponse
     public function make(PageInterface $page)
     {
         if (!$page->getResponse()) {
-
             $response = $this->response->view(
                 'anomaly.module.pages::page',
                 [

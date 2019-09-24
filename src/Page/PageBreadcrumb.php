@@ -31,7 +31,7 @@ class PageBreadcrumb
     /**
      * Create a new PageBreadcrumb instance.
      *
-     * @param Request              $request
+     * @param Request $request
      * @param BreadcrumbCollection $breadcrumbs
      */
     public function __construct(Request $request, BreadcrumbCollection $breadcrumbs)
@@ -62,12 +62,11 @@ class PageBreadcrumb
      * Load the parent breadcrumbs.
      *
      * @param PageInterface $page
-     * @param array         $breadcrumbs
+     * @param array $breadcrumbs
      */
     protected function loadParent(PageInterface $page, array &$breadcrumbs)
     {
         if ($parent = $page->getParent()) {
-
             $breadcrumbs[$parent->getTitle()] = $parent->getPath();
 
             $this->loadParent($parent, $breadcrumbs);

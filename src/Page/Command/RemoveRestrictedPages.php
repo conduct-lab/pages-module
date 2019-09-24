@@ -2,8 +2,7 @@
 
 use Anomaly\PagesModule\Page\Contract\PageInterface;
 use Anomaly\PagesModule\Page\PageCollection;
-use Anomaly\UsersModule\User\Contract\UserInterface;
-use Illuminate\Contracts\Auth\Guard;
+use Anomaly\Streams\Platform\User\Contract\UserInterface;
 
 /**
  * Class RemoveRestrictedPages
@@ -35,17 +34,15 @@ class RemoveRestrictedPages
     /**
      * Handle the command.
      *
-     * @param  Guard $auth
      * @return PageCollection
      */
-    public function handle(Guard $auth)
+    public function handle()
     {
         /* @var UserInterface|null $user */
-        $user = $auth->user();
+        $user = user();
 
         /* @var PageInterface $page */
         foreach ($this->pages as $key => $page) {
-
             $roles = $page->getAllowedRoles();
 
             /*
@@ -72,7 +69,6 @@ class RemoveRestrictedPages
              * can NOT display. Forget it.
              */
             if ($roles->has('guest') && $user) {
-
                 $this->pages->forget($key);
 
                 continue;
@@ -84,7 +80,6 @@ class RemoveRestrictedPages
              * we can't authorize anything!
              */
             if (!$roles->isEmpty() && !$user) {
-
                 $this->pages->forget($key);
 
                 continue;
@@ -96,7 +91,6 @@ class RemoveRestrictedPages
              * any of them then don't show it.
              */
             if (!$roles->isEmpty() && !$user->hasAnyRole($roles)) {
-
                 $this->pages->forget($key);
 
                 continue;

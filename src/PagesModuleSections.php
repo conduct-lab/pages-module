@@ -16,7 +16,7 @@ class PagesModuleSections
     /**
      * Handle the sections.
      *
-     * @param ControlPanelBuilder           $builder
+     * @param ControlPanelBuilder $builder
      * @param PreferenceRepositoryInterface $preferences
      */
     public function handle(ControlPanelBuilder $builder, PreferenceRepositoryInterface $preferences)
