@@ -5,7 +5,6 @@ use Anomaly\PagesModule\Page\Contract\PageRepositoryInterface;
 use Anomaly\PagesModule\Page\PageResolver;
 use Anomaly\Streams\Platform\Http\Controller\PublicController;
 use Anomaly\Streams\Platform\View\ViewTemplate;
-use Illuminate\Routing\Redirector;
 use Illuminate\Routing\Route;
 
 /**
@@ -47,8 +46,8 @@ class PagesController extends PublicController
     /**
      * Preview a page.
      *
-     * @param  ViewTemplate                                    $template
-     * @param  PageRepositoryInterface                         $pages
+     * @param  ViewTemplate $template
+     * @param  PageRepositoryInterface $pages
      * @param                                                  $id
      * @return null|\Symfony\Component\HttpFoundation\Response
      */
@@ -71,22 +70,21 @@ class PagesController extends PublicController
     /**
      * Redirect elsewhere.
      *
-     * @param  PageRepositoryInterface $pages
-     * @param  Redirector              $redirector
-     * @param  Route                   $route
-     * @return \Illuminate\Http\RedirectResponse|void
+     * @param PageRepositoryInterface $pages
+     * @param Route $route
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function redirect(PageRepositoryInterface $pages, Redirector $redirector, Route $route)
+    public function redirect(PageRepositoryInterface $pages, Route $route)
     {
         if ($to = array_get($route->getAction(), 'anomaly.module.pages::redirect')) {
-            return $redirector->to($to, array_get($route->getAction(), 'status', 302));
+            return redirect($to, array_get($route->getAction(), 'status', 302));
         }
 
         /* @var PageInterface $page */
         if ($page = $pages->find(array_get($route->getAction(), 'anomaly.module.pages::page', 0))) {
-            return $redirector->to($page->getPath(), array_get($route->getAction(), 'status', 302));
+            return redirect($page->getPath(), array_get($route->getAction(), 'status', 302));
         }
 
-        abort(404);
+        return abort(404);
     }
 }
