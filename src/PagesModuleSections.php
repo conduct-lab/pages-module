@@ -1,8 +1,10 @@
 <?php namespace Anomaly\PagesModule;
 
+use Anomaly\PagesModule\Page\PageModel;
 use Anomaly\PagesModule\Page\Tree\PageTreeBuilder;
 use Anomaly\PreferencesModule\Preference\Contract\PreferenceRepositoryInterface;
 use Anomaly\Streams\Platform\Ui\ControlPanel\ControlPanelBuilder;
+use Anomaly\Streams\Platform\Ui\Tree\Command\BuildTree;
 use Anomaly\Streams\Platform\Ui\Tree\TreeBuilder;
 
 /**
@@ -24,7 +26,9 @@ class PagesModuleSections
     public function handle(ControlPanelBuilder $builder, PreferenceRepositoryInterface $preferences, PageTreeBuilder $treeBuilder)
     {
         $view = $preferences->value('anomaly.module.pages::page_view', 'tree');
-        $treeBuilder->render();
+        $entriesInMenu = $preferences->value('anomaly.module.pages::page_entries_in_menu', 'N');
+
+        $treeBuilder->dispatchSync(new BuildTree($treeBuilder));
 
         $builder->addSection('pages', [
             'buttons' => [
@@ -43,11 +47,14 @@ class PagesModuleSections
             ],
         ]);
 
-        $treeEntries = $treeBuilder->getTreeEntries()->sort(function ($entryA, $entryB) {
-            return $entryA->sort_order <=> $entryB->sort_order;
-        });
+        if ($entriesInMenu == 'Y') {
+            $treeEntries = $treeBuilder->getTreeEntries()->sort(function ($entryA, $entryB) {
+                return $entryA->sort_order <=> $entryB->sort_order;
+            });
 
-//        $this->buildPagesTree($builder, $treeEntries);
+            $this->buildPagesTree($builder, $treeEntries);
+        }
+
         $builder->addSection('types', [
             'buttons' => [
                 'new_type',
@@ -75,53 +82,6 @@ class PagesModuleSections
                 ],
             ],
         ]);
-//        $builder->setSections(
-//            [
-//                'pages'  => [
-//                    'buttons' => [
-//                        'new_page'    => [
-//                            'data-toggle' => 'modal',
-//                            'data-target' => '#modal',
-//                            'href'        => 'admin/pages/types/choose',
-//                        ],
-//                        'change_view' => [
-//                            'type'    => 'info',
-//                            'enabled' => 'admin/pages',
-//                            'icon'    => ($view == 'tree' ? 'fa fa-table' : 'list-ul'),
-//                            'href'    => 'admin/pages/change/' . ($view == 'tree' ? 'table' : 'tree'),
-//                            'text'    => 'anomaly.module.pages::button.' . ($view == 'tree' ? 'table_view' : 'tree_view'),
-//                        ],
-//                    ],
-//                ],
-//                'types'  => [
-//                    'buttons'  => [
-//                        'new_type',
-//                    ],
-//                    'sections' => [
-//                        'assignments' => [
-//                            'hidden'  => true,
-//                            'href'    => 'admin/pages/types/assignments/{request.route.parameters.stream}',
-//                            'buttons' => [
-//                                'assign_fields' => [
-//                                    'data-toggle' => 'modal',
-//                                    'data-target' => '#modal',
-//                                    'href'        => 'admin/pages/types/assignments/{request.route.parameters.stream}/choose',
-//                                ],
-//                            ],
-//                        ],
-//                    ],
-//                ],
-//                'fields' => [
-//                    'buttons' => [
-//                        'new_field' => [
-//                            'data-toggle' => 'modal',
-//                            'data-target' => '#modal',
-//                            'href'        => 'admin/pages/fields/choose',
-//                        ],
-//                    ],
-//                ],
-//            ]
-//        );
     }
 
     private function buildPagesTree($builder, $entries, $parentId = null, int $level = 0)

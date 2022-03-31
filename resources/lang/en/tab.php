@@ -8,4 +8,5 @@ return [
     'fields'   => 'Fields',
     'page'     => 'Page',
     'seo'      => 'SEO',
+    'open_graph' => 'OpenGraph',
 ];

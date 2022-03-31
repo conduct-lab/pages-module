@@ -10,4 +10,13 @@ return [
             ],
         ],
     ],
+    'page_entries_in_menu' => [
+        'type'   => 'anomaly.field_type.select',
+        'config' => [
+            'options' => [
+                'N'  => 'anomaly.module.pages::preferences.page_entries_in_menu.option.no',
+                'Y' => 'anomaly.module.pages::preferences.page_entries_in_menu.option.yes',
+            ],
+        ],
+    ],
 ];

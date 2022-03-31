@@ -8,4 +8,11 @@ return [
             'table' => 'Table View',
         ],
     ],
+    'page_entries_in_menu' => [
+        'name'   => 'Display page entries in menu',
+        'option' => [
+            'no'  => 'No',
+            'yes' => 'Yes',
+        ],
+    ],
 ];
