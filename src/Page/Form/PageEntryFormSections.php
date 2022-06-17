@@ -22,10 +22,10 @@ class PageEntryFormSections
     {
         $builder->setSections(
             [
-                'page'   => [
+                'page' => [
                     'tabs' => [
                         'content' => [
-                            'title'  => 'behavior_lab.extension.pages::tab.content',
+                            'title' => 'anomaly.module.pages::tab.content',
                             'fields' => function (PageEntryFormBuilder $builder) {
                                 return array_map(
                                     function (FieldType $field) {
@@ -41,22 +41,24 @@ class PageEntryFormSections
                             },
                         ],
                         'general' => [
-                            'title'  => 'anomaly.module.pages::tab.general',
+                            'title' => 'anomaly.module.pages::tab.general',
                             'fields' => [
                                 'page_title',
                                 'page_slug',
                             ],
                         ],
-                        'seo'     => [
-                            'title'  => 'anomaly.module.pages::tab.seo',
+                        'seo' => [
+                            'title' => 'anomaly.module.pages::tab.seo',
                             'fields' => [
                                 'page_meta_title',
                                 'page_meta_description',
+                                'page_structured_data',
                             ],
                         ],
-                        'open_graph'     => [
-                            'title'  => 'anomaly.module.pages::tab.open_graph',
+                        'share' => [
+                            'title' => 'anomaly.module.pages::tab.share',
                             'fields' => [
+                                'share',
                                 'page_open_graph_type',
                                 'page_open_graph_title',
                                 'page_open_graph_description',
@@ -67,10 +69,15 @@ class PageEntryFormSections
                             ],
                         ],
                         'options' => [
-                            'title'  => 'anomaly.module.pages::tab.options',
+                            'title' => 'anomaly.module.pages::tab.options',
                             'fields' => [
                                 'page_enabled',
                                 'page_publish_at',
+                                'page_auto_update_modified_at',
+                                'page_modified_at',
+                                'page_display_modified_at',
+                                'resource_hidden',
+                                'resource_protected',
                                 'page_home',
                                 'page_visible',
                                 'page_exact',

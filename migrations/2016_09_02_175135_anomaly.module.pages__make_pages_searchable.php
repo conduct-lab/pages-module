@@ -22,6 +22,6 @@ class AnomalyModulePagesMakePagesSearchable extends Migration
      */
     public function down()
     {
-        $this->streams()->findBySlugAndNamespace('pages', 'pages')->setAttribute('searchable', false)->save();
+//        $this->streams()->findBySlugAndNamespace('pages', 'pages')->setAttribute('searchable', false)->save();
     }
 }

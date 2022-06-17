@@ -21,6 +21,13 @@ class PageEntryFormBuilder extends MultipleFormBuilder
      * @var array
      */
     protected $buttons = [
+        'redirects' => [
+            'enabled'     => 'edit',
+            'class'       => 'btn-success',
+            'icon'        => 'glyphicons glyphicons-redo',
+            'text'        => 'anomaly.module.redirects::addon.title',
+            'href'        => 'admin/redirects',
+        ],
         'versions',
         'cancel',
         'change' => [

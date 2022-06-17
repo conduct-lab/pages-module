@@ -38,14 +38,24 @@ class PageResponse
     public function make(PageInterface $page)
     {
         if (!$page->getResponse()) {
-
-            $response = $this->response->view(
-                'anomaly.module.pages::page',
-                [
-                    'page'    => $page,
-                    'content' => $page->getContent(),
-                ]
-            );
+//            dd($page->theme_layout ?: $page->type->theme_layout);
+            if (substr(view($page->theme_layout ?: $page->type->theme_layout)->getPath(), -4) === 'twig') {
+                $response = $this->response->view(
+                    'anomaly.module.pages::twig-page',
+                    [
+                        'page' => $page,
+                        'content' => $page->getContent(),
+                    ]
+                );
+            } else {
+                $response = $this->response->view(
+                    'anomaly.module.pages::blade-page',
+                    [
+                        'page' => $page,
+                        'content' => $page->getContent(),
+                    ]
+                );
+            }
 
             if (!$page->isLive()) {
                 $response->setTtl(0);
