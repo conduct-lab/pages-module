@@ -65,7 +65,7 @@ class PageSeeder extends Seeder
                 'type'         => $type,
                 'enabled'      => true,
                 'home'         => true,
-                'theme_layout' => 'theme::layouts/default.twig',
+                'theme_layout' => 'theme::layouts.default',
             ]
         )->allowedRoles()->sync([]);
 
@@ -85,7 +85,7 @@ class PageSeeder extends Seeder
                 ),
                 'type'         => $type,
                 'enabled'      => true,
-                'theme_layout' => 'theme::layouts/default.twig',
+                'theme_layout' => 'theme::layouts.default',
             ]
         )->allowedRoles()->sync([]);
     }
