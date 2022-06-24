@@ -13,6 +13,7 @@ use Anomaly\PagesModule\Page\PageTranslationsModel;
 use Anomaly\PagesModule\Type\Contract\TypeRepositoryInterface;
 use Anomaly\PagesModule\Type\TypeModel;
 use Anomaly\PagesModule\Type\TypeRepository;
+use Anomaly\SettingsModule\Setting\Contract\SettingRepositoryInterface;
 use Anomaly\Streams\Platform\Addon\AddonServiceProvider;
 use Anomaly\Streams\Platform\Application\Event\SystemIsRefreshing;
 use Anomaly\Streams\Platform\Assignment\AssignmentRouter;
@@ -21,6 +22,8 @@ use Anomaly\Streams\Platform\Model\Pages\PagesPagesEntryModel;
 use Anomaly\Streams\Platform\Model\Pages\PagesPagesEntryTranslationsModel;
 use Anomaly\Streams\Platform\Model\Pages\PagesTypesEntryModel;
 use Anomaly\Streams\Platform\Version\VersionRouter;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
 
 /**
  * Class PagesModuleServiceProvider
@@ -51,6 +54,20 @@ class PagesModuleServiceProvider extends AddonServiceProvider
     ];
 
     /**
+     * The addon middleware.
+     *
+     * @type array|null
+     */
+    protected $middleware = [
+        // https://8bityard.com/how-to-minify-html-in-laravel-8/
+        // https://github.com/renatomarinho/laravel-page-speed
+        \RenatoMarinho\LaravelPageSpeed\Middleware\ElideAttributes::class,
+        \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
+        \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
+        \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class, // Note: This middleware invokes "RemoveComments::class" before it runs.
+    ];
+
+    /**
      * The addon listeners.
      *
      * @var array
@@ -67,8 +84,8 @@ class PagesModuleServiceProvider extends AddonServiceProvider
      * @var array
      */
     protected $bindings = [
-        PagesPagesEntryModel::class             => PageModel::class,
-        PagesTypesEntryModel::class             => TypeModel::class,
+        PagesPagesEntryModel::class => PageModel::class,
+        PagesTypesEntryModel::class => TypeModel::class,
         PagesPagesEntryTranslationsModel::class => PageTranslationsModel::class,
     ];
 
@@ -92,6 +109,35 @@ class PagesModuleServiceProvider extends AddonServiceProvider
     ];
 
     /**
+     * Register the addon.
+     */
+    public function boot()
+    {
+        // Run extra pre-boot registration logic here.
+        // Use method injection or commands to bring in services.
+//        Config::set('laravel-page-speed.enable', false);
+        $settings = app(SettingRepositoryInterface::class);
+        $enablePageSpeed = $settings->get('anomaly.module.pages::page_speed_enable');
+        $pageSpeedSkipPathsString = $settings->get('anomaly.module.pages::page_speed_skip_paths');
+
+        if ($enablePageSpeed) {
+            Config::set('laravel-page-speed.enable', $enablePageSpeed->getValue());
+        }
+
+        if ($pageSpeedSkipPathsString) {
+            $pageSpeedSkipPathsString = Str::replace("\n", '', $pageSpeedSkipPathsString->getValue());
+            $pageSpeedSkipPaths = explode(';', $pageSpeedSkipPathsString);
+            foreach ($pageSpeedSkipPaths as $key => $pageSpeedSkipPath) {
+                $pageSpeedSkipPaths[$key] = trim($pageSpeedSkipPath);
+            }
+            if (!in_array('admin/*', $pageSpeedSkipPaths)) {
+                $pageSpeedSkipPaths[] = 'admin/*';
+            }
+            Config::set('laravel-page-speed.skip', $pageSpeedSkipPaths);
+        }
+    }
+
+    /**
      * Map additional routes.
      *
      * @param FieldRouter $fields
@@ -99,10 +145,11 @@ class PagesModuleServiceProvider extends AddonServiceProvider
      * @param AssignmentRouter $assignments
      */
     public function map(
-        FieldRouter $fields,
-        VersionRouter $versions,
+        FieldRouter      $fields,
+        VersionRouter    $versions,
         AssignmentRouter $assignments
-    ) {
+    )
+    {
         $versions->route($this->addon, VersionsController::class);
 
         $fields->route($this->addon, FieldsController::class);
