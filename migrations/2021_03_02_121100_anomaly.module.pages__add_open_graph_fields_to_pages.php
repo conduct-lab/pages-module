@@ -31,7 +31,7 @@ class AnomalyModulePagesAddOpengraphFieldsToPages extends Migration
             'type'   => 'anomaly.field_type.select',
             'config' => [
                 'default_value' => 'website',
-                'handler'       => 'BehaviorLab\PagesExtension\Page\Support\OpenGraphTypeSelectOptions@handle',
+                'handler'       => 'Anomaly\PagesModule\Page\Support\OpenGraphTypeSelectOptions@handle',
             ],
         ],
         'open_graph_title' => 'anomaly.field_type.text',
@@ -41,7 +41,7 @@ class AnomalyModulePagesAddOpengraphFieldsToPages extends Migration
             'type'   => 'anomaly.field_type.select',
             'config' => [
                 'default_value' => 'website',
-                'handler'       => 'BehaviorLab\PagesExtension\Page\Support\OpenGraphTwitterCardSelectOptions@handle',
+                'handler'       => 'Anomaly\PagesModule\Page\Support\OpenGraphTwitterCardSelectOptions@handle',
             ],
         ],
         'open_graph_image_twitter' => 'anomaly.field_type.file',
