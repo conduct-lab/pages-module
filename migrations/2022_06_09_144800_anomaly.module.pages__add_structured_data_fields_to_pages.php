@@ -27,7 +27,7 @@ class AnomalyModulePagesAddStructuredDataFieldsToPages extends Migration
      * @var array
      */
     protected $fields = [
-        'structured_data' => 'behavior_lab.field_type.struct_data',
+        'structured_data' => 'conduct_lab.field_type.struct_data',
     ];
 
     /**
