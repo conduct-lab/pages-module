@@ -32,7 +32,7 @@
     "require": {
         "anomaly/streams-platform": "^1.6",
         "anomaly/preferences-module": "^2.1",
-        "behavior_lab/struct_data-module": "^1.0",
+        "conduct_lab/struct_data-module": "^1.1.0",
         "renatomarinho/laravel-page-speed": "^2.1.0"
     },
     "autoload": {
