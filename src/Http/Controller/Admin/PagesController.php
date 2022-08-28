@@ -98,6 +98,9 @@ class PagesController extends AdminController
         $this->dispatch(new AddPageFormFromPage($form, $page)); // First
         $this->dispatch(new AddEntryFormFromPage($form, $page)); // Second
 
+        $form->setOption('title', $page->title);
+        $form->setOption('description', $page->path);
+
         return $form->render($page);
     }
 
