@@ -20,31 +20,41 @@ class PageEntryFormSections
      */
     public function handle(PageEntryFormBuilder $builder)
     {
+//        $fields = function (PageEntryFormBuilder $builder) {
+//            return array_map(
+//                function (FieldType $field) {
+//                    return 'entry_' . $field->getField();
+//                },
+//                array_filter(
+//                    $builder->getFormFields()->base()->all(),
+//                    function (FieldType $field) {
+//                        return (!$field->getEntry() instanceof PageModel);
+//                    }
+//                )
+//            );
+//        };
         $builder->setSections(
             [
                 'page' => [
                     'tabs' => [
                         'content' => [
                             'title' => 'anomaly.module.pages::tab.content',
-                            'fields' => function (PageEntryFormBuilder $builder) {
-                                return array_map(
+                            'fields' => array_merge([
+                                'page_title',
+                                'page_slug'],array_map(
+                                function (FieldType $field) {
+                                    return 'entry_' . $field->getField();
+                                },
+                                array_filter(
+                                    $builder->getFormFields()->base()->all(),
                                     function (FieldType $field) {
-                                        return 'entry_' . $field->getField();
-                                    },
-                                    array_filter(
-                                        $builder->getFormFields()->base()->all(),
-                                        function (FieldType $field) {
-                                            return (!$field->getEntry() instanceof PageModel);
-                                        }
-                                    )
-                                );
-                            },
+                                        return (!$field->getEntry() instanceof PageModel);
+                                    }
+                                ))),
                         ],
                         'general' => [
                             'title' => 'anomaly.module.pages::tab.general',
                             'fields' => [
-                                'page_title',
-                                'page_slug',
                                 'page_parent',
                                 'page_enabled',
                                 'page_publish_at',
