@@ -2,6 +2,7 @@
 
 use Anomaly\PagesModule\Page\Contract\PageInterface;
 use Anomaly\PagesModule\Page\Handler\Contract\PageHandlerInterface;
+use Anomaly\SettingsModule\Setting\Contract\SettingRepositoryInterface;
 use Anomaly\Streams\Platform\Addon\Extension\Extension;
 use Anomaly\Streams\Platform\Model\Pages\PagesPagesEntryTranslationsModel;
 
@@ -35,6 +36,9 @@ class PageHandlerExtension extends Extension implements PageHandlerInterface
     {
         $translations = $page->getTranslations();
 
+        $settings = app(SettingRepositoryInterface::class);
+        $defaultLocale = $settings->value('streams::default_locale');
+
         /**
          * If the page is exact then
          * return it as is with no {any}.
@@ -43,12 +47,12 @@ class PageHandlerExtension extends Extension implements PageHandlerInterface
             return implode(
                 "\n\n",
                 $translations->map(
-                    function ($translation) use ($page) {
-
+                    function ($translation) use ($page, $defaultLocale) {
+                        $localePath = $translation->locale !== $defaultLocale ? '/' . $translation->locale : '';
                         /**
                          * @var PageInterface|PagesPagesEntryTranslationsModel $translation
                          */
-                        return "Route::any('{$translation->path}', [
+                        return "Route::any('{$localePath}{$translation->path}', [
     'uses'                       => 'Anomaly\\PagesModule\\Http\\Controller\\PagesController@view',
     'as'                         => 'pages::{$page->getId()}.{$translation->locale}',
     'streams::addon'             => 'anomaly.module.pages',
