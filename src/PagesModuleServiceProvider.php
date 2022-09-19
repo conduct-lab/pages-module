@@ -156,7 +156,7 @@ class PagesModuleServiceProvider extends AddonServiceProvider
         $assignments->route($this->addon, AssignmentsController::class, 'admin/pages/types');
 
         if (!file_exists($routes = app_storage_path('pages/routes.php'))) {
-            dispatch_now(new DumpPages());
+            dispatch_sync(new DumpPages());
         }
 
         require $routes;
