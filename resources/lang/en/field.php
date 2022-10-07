@@ -21,6 +21,17 @@ return [
         'name'         => 'Meta Description',
         'instructions' => 'Specify the SEO description.',
     ],
+    'robots_no_index' => [
+        'name'         => 'Robots - no index',
+        'instructions' => 'If true, search engine robots will be instructed not to index this page.',
+    ],
+    'robots_no_follow' => [
+        'name'         => 'Robots - no follow',
+        'instructions' => 'If true, search engine robots will be instructed not to follow this page.',
+    ],
+    'hide_from_sitemap_xml' => [
+        'name'         => 'Hide page from sitemap.xml',
+    ],
     'structured_data' => [
         'name'         => 'Structured data',
     ],

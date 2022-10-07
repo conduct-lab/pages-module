@@ -9,6 +9,7 @@ use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
  * @link   http://pyrocms.com/
  * @author PyroCMS, Inc. <support@pyrocms.com>
  * @author Ryan Thompson <ryan@pyrocms.com>
+ * @author Claus Hjort Bube <chb@b-cph.com>
  */
 class PageEntryFormSections
 {
@@ -70,6 +71,9 @@ class PageEntryFormSections
                             'fields' => [
                                 'page_meta_title',
                                 'page_meta_description',
+                                'page_robots_no_index',
+                                'page_robots_no_follow',
+                                'page_hide_from_sitemap_xml',
                                 'page_structured_data',
                             ],
                         ],
