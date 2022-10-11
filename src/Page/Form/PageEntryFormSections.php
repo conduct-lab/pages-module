@@ -80,7 +80,7 @@ class PageEntryFormSections
                         'share' => [
                             'title' => 'anomaly.module.pages::tab.share',
                             'fields' => [
-                                'share',
+                                'page_share',
                                 'page_open_graph_type',
                                 'page_open_graph_title',
                                 'page_open_graph_description',
